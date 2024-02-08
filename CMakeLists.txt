@@ -15,9 +15,9 @@ SET(CMAKE_BUILD_TYPE Release)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR}/bin)
 
 #These flags might not work on every system, especially the release flags, comment out as needed
-set(CMAKE_CXX_FLAGS "-O3")
-set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native")
+#set(CMAKE_CXX_FLAGS "-O2")
+set(CMAKE_CXX_FLAGS_RELEASE "-O2 -march=native")
+#set(ENABLE_CXX_EXCEPTIONS 1)
 
 #checks if VTK is available
 find_package(VTK QUIET)
@@ -32,7 +32,7 @@ configure_file(
 )
 
 add_executable(${PROJECT_NAME} main.cpp  makelevelset3.cpp)
-
+#target_compile_options (SDFGen PUBLIC -fexceptions)
 if(VTK_FOUND)
 	include_directories(${VTK_INCLUDE_DIRS})
 	target_link_libraries(${PROJECT_NAME} ${VTK_LIBRARIES})

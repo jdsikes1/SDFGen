@@ -22,7 +22,7 @@
 
 int main(int argc, char* argv[]) {
   
-  if(argc != 4) {
+  if(argc != 7) {
     std::cout << "SDFGen - A utility for converting closed oriented triangle meshes into grid-based signed distance fields.\n";
     std::cout << "\nThe output file format is:";
     std::cout << "<ni> <nj> <nk>\n";
@@ -59,6 +59,23 @@ int main(int argc, char* argv[]) {
   std::stringstream arg3(argv[3]);
   int padding;
   arg3 >> padding;
+
+  std::stringstream arg4(argv[4]);
+  int xpad;
+  arg4 >> xpad;
+
+  std::stringstream arg5(argv[5]);
+  int ypad;
+  arg5 >> ypad;
+
+  std::stringstream arg6(argv[6]);
+  int zpad;
+  arg6 >> zpad;
+
+  Vec3f custpad;
+  custpad[0] = xpad;
+  custpad[1] = ypad;
+  custpad[2] = zpad;
 
   if(padding < 1) padding = 1;
   //start with a massive inside out bound box.
@@ -113,8 +130,12 @@ int main(int argc, char* argv[]) {
 
   //Add padding around the box.
   Vec3f unit(1,1,1);
-  min_box -= padding*dx*unit;
-  max_box += padding*dx*unit;
+  min_box[0] -= custpad[0] * dx * unit[0];
+  min_box[1] -= custpad[1] * dx * unit[0];
+  min_box[2] -= custpad[2] * dx * unit[0];
+  max_box[0] += custpad[0]*dx*unit[0];
+  max_box[1] += custpad[1] * dx * unit[0];
+  max_box[2] += custpad[2] * dx * unit[0];
   Vec3ui sizes = Vec3ui((max_box - min_box)/dx);
   
   std::cout << "Bound box size: (" << min_box << ") to (" << max_box << ") with dimensions " << sizes << "." << std::endl;

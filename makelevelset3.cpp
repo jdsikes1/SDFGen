@@ -160,7 +160,7 @@ void make_level_set3(const std::vector<Vec3ui> &tri, const std::vector<Vec3f> &x
       }
    }
    // and now we fill in the rest of the distances with fast sweeping
-   for(unsigned int pass=0; pass<2; ++pass){
+   for(unsigned int pass=0; pass<8; ++pass){
       sweep(tri, x, phi, closest_tri, origin, dx, +1, +1, +1);
       sweep(tri, x, phi, closest_tri, origin, dx, -1, -1, -1);
       sweep(tri, x, phi, closest_tri, origin, dx, +1, +1, -1);
